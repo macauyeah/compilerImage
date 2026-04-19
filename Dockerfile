@@ -35,10 +35,6 @@ RUN curl "https://dlcdn.apache.org/maven/maven-3/$mavenversion/binaries/apache-m
 	&& curl -L "https://services.gradle.org/distributions/gradle-$gradleversion-bin.zip" -o gradle.zip \
 	&& unzip gradle.zip && rm gradle.zip
 
-RUN curl -o /tmp/qoder_x86_64.deb -fsSL https://download.qoder.com/release/latest/qoder_amd64.deb \
-    && dpkg -i /tmp/qoder_x86_64.deb \
-    && rm /tmp/qoder_x86_64.deb
-
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/ubuntu
 USER ubuntu
 WORKDIR /home/ubuntu
@@ -50,6 +46,4 @@ RUN source /home/ubuntu/.bashrc && nvm install 24
 #RUN nvm -v && node -v && npm -v
 SHELL ["/bin/sh", "-c"]
 
-RUN mkdir /home/ubuntu/.m2 && mkdir /home/ubuntu/sourcecode && mkdir /home/ubuntu/.qoder
-
-ENTRYPOINT [ "qoder", "--wait" ]
+RUN mkdir /home/ubuntu/.m2 && mkdir /home/ubuntu/sourcecode
