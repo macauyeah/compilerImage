@@ -1,0 +1,25 @@
+services:
+  compiler:
+    image: wingzzz2003/qoder:beta
+    tty: true
+    stdin_open: true
+    entrypoint: ["/bin/bash"]
+    environment:
+      - DISPLAY=${DISPLAY}
+      #- WAYLAND_DISPLAY=$WAYLAND_DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - sourcecode:/home/ubuntu/sourcecode
+      - m2cache:/home/ubuntu/.m2
+      - qoderconfig:/home/ubuntu/.qoder
+      #- $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/tmp/$WAYLAND_DISPLAY
+    ports:
+      - 8080:8080
+
+volumes:
+  sourcecode:
+  m2cache:
+  qoderconfig:
+
+# xhost +local:
+# podman container run -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix:rw -it --entrypoint /bin/bash --rm docker.io/wingzzz2003/qoder:beta
