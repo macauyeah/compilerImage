@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y \
 	curl \
 	git \
 	zip \
-	openjdk-8-jdk \
 	openjdk-17-jdk \
 	openjdk-21-jdk \
 	tzdata \

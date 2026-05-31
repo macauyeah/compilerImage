@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: wingzzz2003/qoder
+  IMAGE_NAME: wingzzz2003/compiler
 
 jobs:
   build:
