@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-ARG mavenversion=3.9.14
+ARG mavenversion=3.9.16
 ARG gradleversion=9.4.1
 ARG nvmversion=v0.40.4
 
