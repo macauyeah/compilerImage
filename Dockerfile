@@ -1,13 +1,13 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 ARG mavenversion=3.9.16
-ARG gradleversion=9.4.1
-ARG nvmversion=v0.40.4
+ARG gradleversion=9.6.1
+ARG nvmversion=v0.40.5
 
 RUN cat > /etc/apt/sources.list.d/ubuntu.sources <<EOL
 Types: deb
 URIs: http://hk.archive.ubuntu.com/ubuntu/
-Suites: noble noble-updates noble-backports noble-security
+Suites: resolute resolute-updates resolute-backports resolute-security
 Components: main restricted universe multiverse
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 EOL
@@ -16,8 +16,9 @@ RUN apt-get update && apt-get install -y \
 	curl \
 	git \
 	zip \
-	openjdk-17-jdk \
+	# openjdk-17-jdk \
 	openjdk-21-jdk \
+	openjdk-25-jdk \
 	tzdata \
 	sudo \
 	xdg-utils x11-apps fonts-wqy-microhei fonts-wqy-zenhei \
@@ -40,9 +41,7 @@ WORKDIR /home/ubuntu
 ENV PATH="/opt/apache-maven-$mavenversion/bin:/opt/gradle-$gradleversion/bin:${PATH}"
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$nvmversion/install.sh | bash
-SHELL ["/bin/bash", "--login", "-i", "-c"]
-RUN source /home/ubuntu/.bashrc && nvm install 24
-#RUN nvm -v && node -v && npm -v
-SHELL ["/bin/sh", "-c"]
+RUN bash -lc "source /home/ubuntu/.nvm/nvm.sh && nvm install 26"
+#RUN bash -lc "source /home/ubuntu/.nvm/nvm.sh && nvm -v && node -v && npm -v"
 
 RUN mkdir /home/ubuntu/.m2 && mkdir /home/ubuntu/sourcecode
