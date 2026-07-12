@@ -6,6 +6,7 @@ services:
     entrypoint: ["/bin/bash"]
     environment:
       - DISPLAY=${DISPLAY}
+      #- DISPLAY=host.docker.internal:0.0
       #- WAYLAND_DISPLAY=$WAYLAND_DISPLAY
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
@@ -19,8 +20,18 @@ volumes:
   sourcecode:
   m2cache:
 
+# steamdeck
 # xhost +local:
 # podman container run -e DISPLAY=${DISPLAY} \
 # -v /tmp/.X11-unix:/tmp/.X11-unix:rw -it --entrypoint /bin/bash \
 # --network=host \
 # --rm docker.io/wingzzz2003/compiler:beta
+
+# windows + mobilexterm
+# enable DISPLAY=host.docker.internal:0.0
+# disable DISPLAY=${DISPLAY}
+# disable /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+# ubuntu
+# enable WAYLAND_DISPLAY=$WAYLAND_DISPLAY
+# disable DISPLAY=${DISPLAY}
