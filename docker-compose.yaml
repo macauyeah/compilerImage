@@ -20,4 +20,7 @@ volumes:
   m2cache:
 
 # xhost +local:
-# podman container run -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix:rw -it --entrypoint /bin/bash --rm docker.io/wingzzz2003/compiler:beta
+# podman container run -e DISPLAY=${DISPLAY} \
+# -v /tmp/.X11-unix:/tmp/.X11-unix:rw -it --entrypoint /bin/bash \
+# --network=host \
+# --rm docker.io/wingzzz2003/compiler:beta
