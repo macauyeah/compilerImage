@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y \
 	tzdata \
 	sudo \
 	xdg-utils x11-apps fonts-wqy-microhei fonts-wqy-zenhei \
+	libgl1 libdrm2 libgbm1 libasound2t64 libatk-bridge2.0-0 libgtk-3-0 libnss3 libxss1 libsecret-1-0 \
 	&& rm -rf /var/lib/apt/lists/*
 RUN ln -fs /usr/share/zoneinfo/Asia/Macau /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 RUN update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java \

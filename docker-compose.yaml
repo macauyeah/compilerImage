@@ -4,12 +4,15 @@ services:
     tty: true
     stdin_open: true
     entrypoint: ["/bin/bash"]
+    # shm_size: '2gb' # for windows
+    ipc: host  # Linux/Steam Deck only; not needed when shm_size is set
     environment:
       - DISPLAY=${DISPLAY}
-      #- DISPLAY=host.docker.internal:0.0
-      #- WAYLAND_DISPLAY=$WAYLAND_DISPLAY
+      # - DISPLAY=host.docker.internal:0.0 # for windows
+      #- WAYLAND_DISPLAY=$WAYLAND_DISPLAY # for ubuntu
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw # for linux
+      - /dev/shm:/dev/shm  # Linux/Steam Deck only; use shm_size on Windows
       - sourcecode:/home/ubuntu/sourcecode
       - m2cache:/home/ubuntu/.m2
       #- $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/tmp/$WAYLAND_DISPLAY
@@ -23,14 +26,15 @@ volumes:
 # steamdeck
 # xhost +local:
 # podman container run -e DISPLAY=${DISPLAY} \
-# -v /tmp/.X11-unix:/tmp/.X11-unix:rw -it --entrypoint /bin/bash \
-# --network=host \
+# -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /dev/shm:/dev/shm -it --entrypoint /bin/bash \
+# --network=host --ipc=host \
 # --rm docker.io/wingzzz2003/compiler:beta
 
 # windows + mobilexterm
 # enable DISPLAY=host.docker.internal:0.0
 # disable DISPLAY=${DISPLAY}
 # disable /tmp/.X11-unix:/tmp/.X11-unix:rw
+# shm_size handles /dev/shm automatically — no extra flags needed
 
 # ubuntu
 # enable WAYLAND_DISPLAY=$WAYLAND_DISPLAY
