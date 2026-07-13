@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y \
 	openjdk-25-jdk \
 	tzdata \
 	sudo \
+	gnupg git-remote-gcrypt \
 	xdg-utils x11-apps fonts-wqy-microhei fonts-wqy-zenhei \
 	libgl1 libdrm2 libgbm1 libasound2t64 libatk-bridge2.0-0 libgtk-3-0 libnss3 libxss1 libsecret-1-0 \
 	&& rm -rf /var/lib/apt/lists/*
