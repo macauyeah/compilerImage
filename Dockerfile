@@ -26,9 +26,11 @@ RUN apt-get update && apt-get install -y \
 	libgl1 libdrm2 libgbm1 libasound2t64 libatk-bridge2.0-0 libgtk-3-0 libnss3 libxss1 libsecret-1-0 \
 	&& rm -rf /var/lib/apt/lists/*
 RUN ln -fs /usr/share/zoneinfo/Asia/Macau /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
-RUN update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java \
-	&& update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-amd64/bin/javac \
-	&& update-alternatives --set jar /usr/lib/jvm/java-21-openjdk-amd64/bin/jar
+RUN ARCH=$(dpkg --print-architecture) \
+    && update-alternatives --set java /usr/lib/jvm/java-21-openjdk-${ARCH}/bin/java \
+    && update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-${ARCH}/bin/javac \
+    && update-alternatives --set jar /usr/lib/jvm/java-21-openjdk-${ARCH}/bin/jar
+
 #/usr/lib/jvm/java-17-openjdk-amd64/bin/java
 
 WORKDIR /opt
@@ -47,3 +49,4 @@ RUN bash -lc "source /home/ubuntu/.nvm/nvm.sh && nvm install 26"
 #RUN bash -lc "source /home/ubuntu/.nvm/nvm.sh && nvm -v && node -v && npm -v"
 
 RUN mkdir /home/ubuntu/.m2 && mkdir /home/ubuntu/sourcecode
+VOLUME ["/home/ubuntu/.m2", "/home/ubuntu/sourcecode"]
