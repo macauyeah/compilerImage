@@ -4,14 +4,16 @@ services:
     tty: true
     stdin_open: true
     entrypoint: ["/bin/bash"]
-    # shm_size: '2gb' # for windows
-    ipc: host  # Linux/Steam Deck only; not needed when shm_size is set
+    shm_size: '2gb' # for windows,mac
+    security_opt: # mac only
+      - seccomp:unconfined
+    #ipc: host  # Linux/Steam Deck only; not needed when shm_size is set
     environment:
-      - DISPLAY=${DISPLAY}
-      # - DISPLAY=host.docker.internal:0.0 # for windows
+      #- DISPLAY=${DISPLAY}
+      - DISPLAY=host.docker.internal:0.0 # for windows, mac
       #- WAYLAND_DISPLAY=$WAYLAND_DISPLAY # for ubuntu
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw # for linux
+      #- /tmp/.X11-unix:/tmp/.X11-unix:rw # for linux
       - /dev/shm:/dev/shm  # Linux/Steam Deck only; use shm_size on Windows
       - sourcecode:/home/ubuntu/sourcecode
       - m2cache:/home/ubuntu/.m2
@@ -29,6 +31,14 @@ volumes:
 # -v /tmp/.X11-unix:/tmp/.X11-unix:rw -v /dev/shm:/dev/shm -it --entrypoint /bin/bash \
 # --network=host --ipc=host \
 # --rm docker.io/wingzzz2003/compiler:beta
+
+# mac + XQuartz
+# xhost +localhost
+# enable DISPLAY=host.docker.internal:0.0, security_ops, shm_size: '2gb'
+# disable DISPLAY=${DISPLAY}
+# disable /tmp/.X11-unix:/tmp/.X11-unix:rw
+# disable ipc:host
+# in XQuartz, enable "Allow connections from network clients"
 
 # windows + mobilexterm
 # enable DISPLAY=host.docker.internal:0.0

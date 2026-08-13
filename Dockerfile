@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
 	curl \
 	git \
 	zip \
+	locales \
 	# openjdk-17-jdk \
 	openjdk-21-jdk \
 	openjdk-25-jdk \
@@ -25,7 +26,9 @@ RUN apt-get update && apt-get install -y \
 	xdg-utils x11-apps fonts-wqy-microhei fonts-wqy-zenhei \
 	libgl1 libdrm2 libgbm1 libasound2t64 libatk-bridge2.0-0 libgtk-3-0 libnss3 libxss1 libsecret-1-0 \
 	&& rm -rf /var/lib/apt/lists/*
-RUN ln -fs /usr/share/zoneinfo/Asia/Macau /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+RUN locale-gen en_US.UTF-8 && update-locale LANG=en_US.UTF-8 \
+    && ln -fs /usr/share/zoneinfo/Asia/Macau /etc/localtime \
+	&& dpkg-reconfigure -f noninteractive tzdata
 RUN ARCH=$(dpkg --print-architecture) \
     && update-alternatives --set java /usr/lib/jvm/java-21-openjdk-${ARCH}/bin/java \
     && update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-${ARCH}/bin/javac \
